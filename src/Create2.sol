@@ -9,7 +9,7 @@ import {L2ContractHelper} from "era-contracts/l2-contracts/contracts/L2ContractH
 
 // This contract is used to deploy a contract using create2 on ZKsync based chains
 contract Create2ZK {
-    error Create2FailedDeployment();
+    error Create2FailedDeployment(string reason);
 
     function deploy(
         bytes32 salt,
@@ -28,7 +28,15 @@ contract Create2ZK {
             );
 
         if (!success) {
-            revert Create2FailedDeployment();
+            string memory errorReason;
+            if (returnData.length > 0) {
+                // Try to decode the revert reason from returnData
+                errorReason = abi.decode(returnData, (string));
+            } else {
+                errorReason = "Unknown error - no revert message";
+            }
+            console.log("Create2 deployment failed with reason:", errorReason);
+            revert Create2FailedDeployment(errorReason);
         }
 
         create2Address = abi.decode(returnData, (address));

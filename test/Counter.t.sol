@@ -10,6 +10,7 @@ contract CounterTest is Test, TestExt {
 
     function setUp() public {
         counter = new Counter();
+        // test using StdUtils
         bytes32 bytecodeHash = StdUtils.zkGetBytecodeHash(
             type(Counter).creationCode
         );
