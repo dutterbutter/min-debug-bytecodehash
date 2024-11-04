@@ -3,12 +3,17 @@ pragma solidity ^0.8.13;
 
 import {Test, console} from "forge-std/Test.sol";
 import {Counter} from "../src/Counter.sol";
+import {TestExt, StdUtils} from "forge-zksync-std/TestExt.sol";
 
-contract CounterTest is Test {
+contract CounterTest is Test, TestExt {
     Counter public counter;
 
     function setUp() public {
         counter = new Counter();
+        bytes32 bytecodeHash = StdUtils.zkGetBytecodeHash(
+            type(Counter).creationCode
+        );
+        console.logBytes32(bytecodeHash);
         counter.setNumber(0);
     }
 
