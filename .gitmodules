@@ -4,3 +4,6 @@
 [submodule "lib/forge-zksync-std"]
 	path = lib/forge-zksync-std
 	url = https://github.com/dutterbutter/forge-zksync-std
+[submodule "lib/era-contracts"]
+	path = lib/era-contracts
+	url = https://github.com/matter-labs/era-contracts
